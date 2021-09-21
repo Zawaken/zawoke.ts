@@ -1,7 +1,9 @@
 # zawoke.ts
 
 Trying my hand at doing a complete rewrite of my [discord bot](https://github.com/zawaken/zawoke).
+
 The bot was originally written in python using the discord.py API implementation.
+
 I have now chosen to go over to Discord.js and Discord-akairo in typescript.
 
 <br>[Invite link](https://discordapp.com/oauth2/authorize?client_id=319005959022313483&scope=bot&permissions=2146958591)
