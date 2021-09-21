@@ -6,7 +6,8 @@
     "discord-akairo": "^8.1.0",
     "discord-api-types": "^0.23.1",
     "discord.js": "^12.5.3",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "ts-node": "^10.2.1"
   },
   "name": "ts-rewrite",
   "version": "1.0.0",
