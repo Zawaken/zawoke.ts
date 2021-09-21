@@ -1,15 +1,15 @@
 version: "3"
 
 
-  services:
-    zawoke.ts:
-      container_name: zawoke
-      hostname: zawoke
-      restart: always
-      image: zawoke
-      build:
-        context: .
-      environment:
-        - DOCKER_MODE=True
-      volumes:
-       - ./source:/app/source
+services:
+  zawoke.ts:
+    container_name: zawoke.ts
+    hostname: zawoke.ts
+    restart: always
+    image: zawoke.ts
+    build:
+      context: .
+    environment:
+      - DOCKER_MODE=True
+    volumes:
+     - ./source:/app/source
