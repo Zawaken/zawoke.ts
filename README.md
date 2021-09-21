@@ -17,7 +17,7 @@ I have now chosen to go over to Discord.js and Discord-akairo in typescript.
 
 ### Running Zawoke yourself
 Zawoke can be hosted in two different ways.
-Do remember to copy src/example_secrets.json to src/secrets.json
+Do remember to copy __.env.example__ to __.env__ and add your Token.
 
 #### On bare metal
 You can git clone the repo and run it with `ts-node source/bot.ts`.
