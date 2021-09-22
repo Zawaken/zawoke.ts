@@ -22,8 +22,8 @@ export default class InfoCommand extends Command {
             var user = msg.guild.members.resolve(msg.author);
         }
         const d = new Date();
-        const footer = [d.getMonth()+1,
-                d.getDate(),
+        const footer = [d.getDate(),
+                d.getMonth() +1,
                 d.getFullYear()].join('-')+' '+
                 [d.getHours(),
                 d.getMinutes(),
