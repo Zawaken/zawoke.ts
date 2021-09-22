@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es2018",
         "module": "commonjs",
-        "outDir": "build",
+        "outDir": "dist",
         "resolveJsonModule": true,
         "sourceMap": false,
         "inlineSourceMap": false,
@@ -14,5 +14,8 @@
         "typeRoots": [".d.ts", "./node_modules/@types"]
     },
     "include": ["source/**/*"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "scripts": {
+        "start": "tsc --build && node dist/bot.js"
+    }
 }

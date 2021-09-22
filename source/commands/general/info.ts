@@ -21,14 +21,20 @@ export default class InfoCommand extends Command {
             var member = msg.author;
             var user = msg.guild.members.resolve(msg.author);
         }
-
+        const d = new Date();
+        const footer = [d.getMonth()+1,
+                d.getDate(),
+                d.getFullYear()].join('-')+' '+
+                [d.getHours(),
+                d.getMinutes(),
+                d.getSeconds()].join(':');
         const embed= new MessageEmbed().setTitle(`${user.displayName}#${member.discriminator}`)
             .setColor('0x600080')
-            .setFooter(Date())
+            .setFooter(footer)
             .addField('id:', member.id, true)
             .addField('nick:', user.nickname, true)
-            .addField('created at:', member.createdAt, true)
-            .addField('Joined at:', user.joinedAt, true)
+            .addField('created at:', member.createdAt.toISOString(), true)
+            .addField('Joined at:', user.joinedAt.toISOString(), true)
             .addField('bot?', member.bot, true)
             .addField('avatar url:', member.avatarURL(), true);
         if (!member.avatarURL()) {

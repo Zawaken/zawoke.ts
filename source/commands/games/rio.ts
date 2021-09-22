@@ -47,7 +47,6 @@ export default class RioGearCommand extends Command {
             { embed.setColor('0x8C1616')}
             else { embed.setColor('0x004a93')};
 
-        console.log(`${cname} ${realm} ${region}`)
         return msg.channel.send(embed);
     }
 }
