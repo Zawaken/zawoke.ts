@@ -1,66 +1,92 @@
-import { 
-    AkairoClient, 
-    CommandHandler, 
-    InhibitorHandler, 
-    ListenerHandler 
-} from 'discord-akairo';
-import { Message } from 'discord.js';
-import { join } from "path";
+// import { Client, Collection, Intents, } from 'discord.js';
+const { Client, Collection, Intents } = require('discord.js');
+import path from 'path';
+import fs from 'fs';
+import { ClientUser } from 'discord.js';
+require('dotenv').config()
 
-declare module 'discord-akairo' {
-    interface AkairoClient {
-        commandHandler: CommandHandler
-        listenerHandler: ListenerHandler
-        console: (content: string) => void
-    }
+const client = new Client({ intents: [Intents.FLAGS.GUILDS]});
+
+const eventFiles = fs.readdirSync(path.resolve(__dirname, '..', 'listeners')).filter(file => file.endsWith('.ts'));
+
+for (const file of eventFiles) {
+  const event = require(path.resolve(__dirname, '..', 'listeners', file));
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
+  }
 }
 
-interface BotOptions {
-    token?: string,
-    prefix?: string,
-}
+client.commands = new Collection();
+const commandFiles = fs.readdirSync(path.resolve(__dirname, '..', 'commands')).filter(file => file.endsWith('.ts'));
 
-export default class Zawoke extends AkairoClient  {
-    public config: BotOptions;
+for (const file of commandFiles) {
+    const command = require(`../commands/${file}`);
+    client.commands.set(command.data.name, command);
+}; 
 
-    public console: (content: string) => void
 
-    public constructor(config: BotOptions) {
-        super()
-        this.config = config
-        this.ownerID = '85467784179351552'
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isCommand()) return;
+
+    const command = client.commands.get(interaction.commandName);
+
+    if (!command) return;
+
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        await interaction.reply({ content: 'There was an error while executing this command :/', ephemeral: true})
     }
+})
 
-    // public inhibitorHandler: InhibitorHandler = new InhibitorHandler(this, {
-    //    directory: join(__dirname, "..", "inhibitors"),
-    // })
+client.login(process.env.TOKEN);
+export default client;
 
-    public listenerHandler: ListenerHandler = new ListenerHandler(this, {
-        directory: join(__dirname, "..", "listeners"),
-    })
+// const client = new Client({ intents: [Intents.FLAGS.GUILDS]})
+// 
+// client.once('ready', () => {
+//     console.log('ready');
+// });
+// 
+// client.commands = new Collection();
+// 
+// export default client;
 
-    public commandHandler: CommandHandler = new CommandHandler(this, {
-        directory: join(__dirname, "..", "commands"),
-        prefix: ['a '],
-        allowMention: true,
-    })
+//interface BotOptions {
+//    token?: string,
+//    prefix?: string,
+//}
 
-    private async init(): Promise<void> {
-        this.commandHandler.useListenerHandler(this.listenerHandler)
-        // this.commandHandler.useInhibitorHandler(this.inhibitorHandler)
-        this.listenerHandler.setEmitters({
-            commandHandler: this.commandHandler,
-            listenerHandler: this.listenerHandler,
-            process,
-        })
-        // this.inhibitorHandler.loadAll()
-        this.commandHandler.loadAll()
-        this.listenerHandler.loadAll()
-    }
 
-    public async start(): Promise<string> {
-        await this.init()
-        return this.login(this.config.token);
-    }
-}
 
+// export default class client extends Client  {
+//     public config: BotOptions;
+// 
+//     public console: (content: string) => void
+// 
+//     public constructor(config: BotOptions) {
+//         super( { intents: [Intents.FLAGS.GUILDS]} )
+//         this.config = config
+//     }
+//     commands = new Collection();
+//     public commandFiles = fs.readdirSync('/home/zawaken/git/zawoke.ts/source/commands').filter(file => file.endsWith('.ts'));
+// 
+//     for (const file of commandFiles) {
+//         let command = require (`./commands/${file}`);
+//         this.commands.set(command.data.name, command);
+//     }
+//     // once(event: 'ready', () => {
+//     //     console.log('ready');
+//     // });
+// 
+//     public async start(): Promise<string> {
+//         return this.login(this.config.token);
+//     }
+// }
+// for (const file of commandFiles) {
+//         let command = require (`./commands/${file}`);
+//         this.commands.set(command.data.name, command);
+// }
