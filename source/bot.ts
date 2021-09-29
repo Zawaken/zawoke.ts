@@ -1,8 +1,7 @@
 import Zawoke from "./client/client";
-require('custom-env').env();
 
-const client: Zawoke = new Zawoke({
+const djsclient = new Zawoke({
     token: process.env.TOKEN,
 });
 
-client.start();
+djsclient.start();

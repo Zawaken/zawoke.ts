@@ -5,8 +5,8 @@
         "outDir": "dist",
         "resolveJsonModule": true,
         "sourceMap": false,
-        "inlineSourceMap": false,
-        "inlineSources": false,
+        "inlineSourceMap": true,
+        "inlineSources": true,
         "incremental": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
@@ -14,8 +14,5 @@
         "typeRoots": [".d.ts", "./node_modules/@types"]
     },
     "include": ["source/**/*"],
-    "exclude": ["node_modules"],
-    "scripts": {
-        "start": "tsc --build && node dist/bot.js"
-    }
+    "exclude": ["node_modules"]
 }
