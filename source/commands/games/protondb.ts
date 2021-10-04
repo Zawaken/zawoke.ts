@@ -2,7 +2,7 @@
 const { MessageEmbed } = require("discord.js");
 import axios from 'axios';
 import { SlashCommandBuilder } from "@discordjs/builders";
-const protondbdata = require('../../proton.json');
+const protondbdata = require('../../../proton.json');
 var FuzzyMatch = require('fuzzy-matching');
 
 module.exports = {
@@ -18,6 +18,7 @@ module.exports = {
         const args = interaction.options
         let protonapi = `https://www.protondb.com/api/v1/reports/summaries/`;
 
+        await interaction.deferReply({ephemeral: false});
         function limit (string = '', limit = 0) {
             if (string.length > limit) {
                 return string.substring(0, limit) + '...';
@@ -67,7 +68,7 @@ module.exports = {
                 .setImage(`https://steamcdn-a.akamaihd.net/steam/apps/${appId}/header.jpg`)
                 .setURL(`https://store.steampowered.com/app/${appId}`)
                 .setFooter(`App ID: ${appId}`);
-            await interaction.reply({embeds: [embed]});
+            await interaction.editReply({embeds: [embed]});
         } catch(error) {
             console.error(error);
         }

@@ -1,6 +1,7 @@
-import Zawoke from "./client/client";
+import {client} from "./client";
+require('dotenv').config();
 
-const djsclient = new Zawoke({
+const djsclient: client = new client({
     token: process.env.TOKEN,
 });
 
