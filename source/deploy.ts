@@ -4,18 +4,54 @@ import { Routes } from 'discord-api-types/v9'
 import { readdirSync } from 'fs';
 import path from 'path';
 require('dotenv').config();
+import fs from 'fs';
 
 const commands = []
 
 const GUILDIDS: string[] = process.env.GUILDIDS.split(',');
 
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
-const commandFiles = readdirSync(path.resolve(__dirname, 'commands')).filter(file => file.endsWith('.ts'));
+const commandFiles = []
+fs.readdirSync(path.resolve(__dirname, 'commands',), {withFileTypes: true}).forEach(fileorfolder => {
+    if(fileorfolder.isDirectory()) {
+        fs.readdirSync(path.resolve(__dirname, 'commands', fileorfolder.name), {withFileTypes: true})
+            .filter(file => file.isFile())
+            .filter(file => file.name.endsWith('.ts'))
+            .forEach(file => {
+                commandFiles.push(path.resolve(__dirname, 'commands', fileorfolder.name, file.name))
+            });
+
+    } else if (fileorfolder.isFile() && fileorfolder.name.endsWith('.ts')) {
+        commandFiles.push(path.resolve(__dirname, 'commands', fileorfolder.name));
+    }
+})
+
 for (const file of commandFiles) {
-	const command = require(path.resolve(__dirname, 'commands', file))
-	commands.push(command.data.toJSON());
+    const command = require(path.resolve(__dirname, 'commands', file))
+    console.log(`found ${file}`)
+    commands.push(command.data.toJSON())
 }
-for (const GuildID of GUILDIDS) {	
+//for (const file of commandFiles) {
+//    fs.stat(path.resolve(__dirname, 'commands', file), (err,stats) => {
+//        if (err) throw err;
+//        if (stats.isDirectory()) {
+//            let subdir = path.join(__dirname, 'commands', file)
+//            fs.readdirSync(path.resolve(__dirname, 'commands', subdir), {withFileTypes: true})
+//                .filter(file => file.isFile())
+//                .filter(file => file.name.endsWith('.ts'))
+//                .forEach(command => {
+//                    const commandFile = require(path.resolve(__dirname, 'commands', subdir, command.name))
+//                    console.log(`found ${file}`)
+//                    commands.push(commandFile.data.name, commands)
+//                })
+//        } else if (stats.isFile()){
+//            const commandFile = require(path.resolve(__dirname, 'commands', file))
+//            console.log(`found ${file}`)
+//            commands.push(commandFile.data.toJSON())
+//        }
+//    })
+//}
+for (const GuildID of GUILDIDS) {
 	(async () => {
 		try {
 			await rest.put(

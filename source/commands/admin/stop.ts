@@ -3,8 +3,9 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('die')
-		.setDescription('Replies with Pong!'),
+		.setDescription('Stops the Discord bot.'),
 	async execute(interaction) {
-		await interaction.reply('Pong!');
+        await interaction.reply('bye')
+        await interaction.client.destroy()
 	},
 };
