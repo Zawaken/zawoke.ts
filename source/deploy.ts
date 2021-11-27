@@ -31,26 +31,7 @@ for (const file of commandFiles) {
     console.log(`found ${file}`)
     commands.push(command.data.toJSON())
 }
-//for (const file of commandFiles) {
-//    fs.stat(path.resolve(__dirname, 'commands', file), (err,stats) => {
-//        if (err) throw err;
-//        if (stats.isDirectory()) {
-//            let subdir = path.join(__dirname, 'commands', file)
-//            fs.readdirSync(path.resolve(__dirname, 'commands', subdir), {withFileTypes: true})
-//                .filter(file => file.isFile())
-//                .filter(file => file.name.endsWith('.ts'))
-//                .forEach(command => {
-//                    const commandFile = require(path.resolve(__dirname, 'commands', subdir, command.name))
-//                    console.log(`found ${file}`)
-//                    commands.push(commandFile.data.name, commands)
-//                })
-//        } else if (stats.isFile()){
-//            const commandFile = require(path.resolve(__dirname, 'commands', file))
-//            console.log(`found ${file}`)
-//            commands.push(commandFile.data.toJSON())
-//        }
-//    })
-//}
+
 for (const GuildID of GUILDIDS) {
 	(async () => {
 		try {

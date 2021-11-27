@@ -27,7 +27,6 @@ module.exports = {
                     d.getSeconds()].join(':');
             const user = interaction.options.getUser('user') || interaction.user;
 
-            //console.log(.guild.members.fetch(user.id).joinedAt)
             const embed = new MessageEmbed().setTitle(`${user.tag}`)
                 .setColor('0x600080')
                 .setFooter(footer)
