@@ -3,13 +3,17 @@ version: "3"
 
 services:
   zawoke.ts:
-    container_name: zawoke.ts
-    hostname: zawoke.ts
-    restart: always
-    image: zawoke.ts
+    container_name: "zawoke.ts"
+    hostname: "zawoke.ts"
+    restart: "no"
+    image: "zawoke.ts"
     build:
       context: .
     environment:
       - DOCKER_MODE=True
     volumes:
-     - ./source:/app/source
+     - ./:/usr/local/zawoke/app
+     - exclude:/usr/local/zawoke/app/node_modules
+
+volumes:
+  exclude:

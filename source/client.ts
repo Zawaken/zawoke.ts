@@ -28,7 +28,7 @@ export class client extends Client {
     }
 
     private loadListeners(): void {
-        const eventFiles = fs.readdirSync(path.resolve(__dirname, 'listeners')).filter(file => file.endsWith('.ts'));
+        const eventFiles = fs.readdirSync(path.resolve(__dirname, 'listeners')).filter(file => file.endsWith('.js'));
 
         for (const file of eventFiles) {
           const event = require(path.resolve(__dirname, 'listeners', file));
@@ -50,7 +50,7 @@ export class client extends Client {
                     let subdir = path.join(__dirname, 'commands', file)
                     fs.readdirSync(path.resolve(__dirname, 'commands', subdir), {withFileTypes: true})
                         .filter(file => file.isFile())
-                        .filter(file => file.name.endsWith('.ts'))
+                        .filter(file => file.name.endsWith('.js'))
                         .forEach(command => {
                             const commands = require(path.resolve(__dirname, 'commands', subdir, command.name))
                             this.commands.set(commands.data.name, commands)

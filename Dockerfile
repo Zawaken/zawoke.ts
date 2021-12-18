@@ -1,11 +1,16 @@
-FROM node:16.9.1-alpine3.14
+FROM node:latest
 
-WORKDIR /app
+WORKDIR /usr/local/zawoke
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 COPY .env ./
+RUN npm install \
+  && npm cache clean --force
 
-RUN npm i
+ENV PATH=/usr/local/zawoke/node_modules/.bin:$PATH
 
-CMD ["ts-node", "source/bot.ts"]
+WORKDIR /usr/local/zawoke/app
+
+COPY . .
+
+CMD [ "bash", "-c", "rm -rf /usr/local/zawoke/app/node_modules/* && npm start"]
