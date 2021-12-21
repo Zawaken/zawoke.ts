@@ -1,11 +1,10 @@
-// import { Command } from "discord-akairo";
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js"); // {{{
 import axios from 'axios';
 import { SlashCommandBuilder } from "@discordjs/builders";
 const protondbdata = require('../../../proton.json');
 var FuzzyMatch = require('fuzzy-matching');
-
-module.exports = {
+// }}}
+module.exports = { // {{{
 	data: new SlashCommandBuilder()
 		.setName('proton')
 		.setDescription('Get ProtonDB rating for a game.')
@@ -73,4 +72,4 @@ module.exports = {
             console.error(error);
         }
     }
-}
+} // }}}
