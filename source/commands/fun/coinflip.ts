@@ -8,12 +8,12 @@ module.exports = {
         let flip = (Math.floor(Math.random() * 2) == 0)
         if (flip) {
             await interaction.reply('Heads!')
-                .then(message => {
-                    message.react('⚪')});
+//                .then(message => {
+//                    message.react('⚪')});
         } else {
             await interaction.reply('Tails!')
-                .then(message => {
-                    message.react('⚫')});
+//                .then(message => {
+//                    message.react('⚫')});
         }
 	},
 };
