@@ -5,7 +5,7 @@ services:
   zawoke.ts:
     container_name: "zawoke.ts"
     hostname: "zawoke.ts"
-    restart: "no"
+    restart: "always"
     image: "zawoke.ts"
     build:
       context: .
