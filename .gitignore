@@ -1,3 +1,7 @@
+*proton.json*
+reports*
+proton.json
+
 # Logs
 logs
 *.log

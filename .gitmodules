@@ -1,0 +1,3 @@
+[submodule "protondb-data"]
+	path = protondb-data
+	url = https://github.com/bdefore/protondb-data
