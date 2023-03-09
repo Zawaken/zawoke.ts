@@ -3,7 +3,7 @@ FROM node:latest
 WORKDIR /usr/local/zawoke
 
 COPY package*.json ./
-COPY .env ./
+#COPY .env ./
 RUN npm install \
   && npm cache clean --force
 
